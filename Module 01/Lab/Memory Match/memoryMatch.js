@@ -1,3 +1,4 @@
+//global variables
 var clickedArray = [];
 
 var interval;
@@ -9,6 +10,7 @@ var numCompleted = 0;
 
 setUp();
 
+//functions
 function randomAnswers() {
     var answers = [1, 1, 2, 2, 3, 3, 4, 4, 5];
     answers.sort(function (item) {
