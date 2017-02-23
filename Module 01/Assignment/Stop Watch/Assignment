@@ -1,0 +1,40 @@
+Stopwatch
+
+It will have three buttons
+
+- Start/Stop
+- Reset
+- Record Time
+
+Start/Stop starts and stops the timer, which increases every 0.01 second
+
+Reset resets the timer to zero
+
+Record time records the timer
+
+The 'S' key should start and stop the stopwatch 
+The 'T' key should record times
+The 'R' button should reset the stopwatch
+
+Visual Elements
+
+- an application title labeled "Stopwatch Demo"
+- a section with a timer that displays the current elapsed time to the hundredth second
+- a button labeled start/stop
+- a button reset, record time
+- a section labeled "Past Times" that keeps a record of prev. rec. times
+
+Start/Stop Functionality
+
+- start/stop button is able to start and stop the elapsed time counter
+- the 's' key is able to start and stop the elapsed time counter
+
+Record  Time Functionality
+
+- the "record time" button is able to record the current timer count into the Past Times section
+- the 't' key is able to record the current timer count into the Past Times section
+
+Reset Functionality
+
+- the rest button is able to wipe all previously recorded times and reset the timer count to 0
+- the 'r' key (same)
