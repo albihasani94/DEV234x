@@ -1,0 +1,299 @@
+Asynchronous Programming with Javascript
+
+Module 1 - Asynchronous Fundamentals
+
+1.1 Intro to Asynchronous Fundamentals
+1.2 Asynchronous Programming Fundamentals
+
+The call stack
+
+Asynchronous Programming
+
+function slowTask(){
+
+    console.log("slow task finished");
+}
+
+function asyncSlowTask(val){ 
+    setTimeout(slowTask,2000); //finishes in two seconds, but is processed on a separate thread
+}
+
+function fastTask(){
+    console.log("fast task finished!")
+}
+
+fastTask();
+asyncSlowTask();
+fastTask();
+asyncSlowTask();
+fastTask();
+fastTask();
+
+/*  Console Output:
+    > "fast task finished" <--faster tasks were processed first
+    > "fast task finished"
+    > "fast task finished"
+    > "fast task finished"
+    > "slow task finished" <--slow tasks were processed separately and didn't block the call stack
+    > "slow task finished"
+*/
+
+1.3 Callback Functions
+
+1.3.1 - Callback Functions
+
+Callback functions are functions that are passed as arguments into other functions to be executed at a later point in time 
+
+//********************************** */
+
+function mult(x, y) {
+    return x * y;
+}
+
+function add(x, y) {
+    return x + y;
+}
+
+function calculate(x, y, compute) {
+    return compute(x, y);
+}
+
+var a = calculate(10, 5, add);
+console.log(a);
+
+var b = calculate(10, 5, mult);
+console.log(b);
+
+//********************************* */
+
+Anonymous Callbacks
+
+var c = calculate(10, 5, function(x, y) {
+    return x-y;
+});
+console.log(c);
+
+//******************************** */
+
+1.3.2 - Examples of methods that use callback functions
+
+var array = [1, 2, 3, 4, 5];
+
+var newArray = array.map(function(x) {
+    return x*x;
+});
+
+console.log(newArray);
+
+
+var array = [1, 2, 3, 4, 5];
+
+function isEven(x) {
+    return x%2 == 0;
+}
+
+var newArray = array.filter(isEven);
+
+console.log(newArray);
+
+1.3.3 - Chaining Callbacks
+
+Chaining Callbacks with Continuation Passing Style
+
+The Continuation Passing Style(CPS) is a programming style used to chain callback functions together. 
+In CPS, methods with callback functions as arguments are called within other callback functions 
+(methods that have callback functions as their last argument)
+
+//******************************* */
+
+function myFunction(x, callback) {
+    callback(x);
+}
+
+var answer = 0;
+
+myFunction(10, function(x){ //callback 1
+    var result = x*x;
+
+    myFunction(result, function(x) { //callback 2
+        var result2 = x + x;
+
+        myFunction(result2, function(x) { //callback 3
+            answer = x + 100;
+            console.log(answer);
+        })
+    })
+});
+
+1.4 Timers 
+
+1.4.1 - setTimeout()
+
+The setTimeout() method is used to schedule a task to be put on the event queue after a given amount of time 
+First parameter: the callback function that is going to be executed
+Second parameter: the amount of time to wait before putting the task on the event queue 
+
+setTimeout(function() {
+    console.log("hello")
+}, 1000); //waits 1 second
+
+clearTimeout()
+
+The clearTimeout() function is used to cancel a timeout that is still pending
+The setTimeout() method call returns a numeric timerId that is used to identify the timer 
+this timerID can be passed into the clearTimeout() method call to stop the timer 
+
+var timeout = setTimeout(function() {
+    console.log("hello")
+}, 1000); //waits 1 second
+
+clearTimeout(timeout); //clears the setTimeout callback from running
+//nothing gets logged
+
+1.4.2 - setInterval()
+
+The setInterval() method is used to schedule a reoccurring task to be put on the event queue every time a given number of milliseconds elapses
+first parameter: callback
+second parameter: time 
+
+var count = 0;
+
+var interval = setInterval(function() {
+    count++;
+    console.log(count);
+}, 1000); //executes the callback every second
+
+clearInterval()
+
+/************************** */
+if(count >= 3) {
+    clearInterval(interval);
+}
+/************************** */
+
+1.4.3 - Asynchronous Code using Timers
+
+Synchronous code is run line by lline in the order in which the code occurred
+
+console.log("first");
+console.log("second");
+console.log("third");
+
+/*  Console Output:
+    > first
+    > second
+    > third
+*/
+
+Asynchronous code may be executed in a different order than how it originally occurred. 
+It is non-blocking and will only run when the call stack is empty
+
+Asynchronous code can be shown by using a setTimeout() method call with the timeout value of 0
+
+function asyncLog(val) {
+    setTimeout(function() {
+        console.log(val);
+    }, 0)
+}
+
+console.log("first");
+asyncLog("second");
+console.log("third");
+
+/*  Console Output
+    > first
+    > third   <---notice this is out of order!!
+    > second  <---this occurs only after the call stack is empty, which is why it appears last
+
+*/
+
+1.5 DOM Events 
+
+1.5.1 - Types of Events and Event Handlers 
+
+DOM Events 
+
+DOM Event Listeners happen in parallel with the Javascript run time 
+If multiple events are detected, multiple tasks will be put on the event queue in the order in which they occurred 
+So, if a certain task takes a long time to finish, the other tasks behind it on the event queue will have to wait 
+
+Types of HTML DOM Events 
+
+- Click Event
+- Mouseenter Event 
+- Mouseleave Event
+- Keypress Event 
+
+Referencing DOM Elements 
+
+<button id="myId">Button</button> //HTML
+
+var button = document.getElementById('myId'); //JS
+
+addEventListener()
+
+The addEventListener(eventType, eventHandler) method call is used to add an event listener to a DOM object 
+eventType: type of event as a String 
+eventHandler: callback 
+
+document.getElementById('myId').addEventListener('eventType', function() {
+    //handle event here
+});
+
+Event Attributes 
+
+- onclick
+- onmouseover
+- onmouseleave
+- onkeypress
+
+document.getElementById('myId').oneventname = function() {
+    //do sth
+}
+
+The event attribute can be assigned in HTML 
+
+<button id="myId" oneventname="eventHandler()">Button</button> //HTML
+
+function eventHandler() {   //JS
+    //do sth
+}
+
+1.5.2 - Handling Click Events 
+
+<button id="myButton">Click</button> //HTML
+
+var value = 0;
+
+document.getElementById('myButton').addEventListener('Click', function() {
+    value++;
+    document.getElementById('myButton').innerHTML(value);
+});
+
+this is equivalent to the code below
+
+document.getElementById('myButton').onclick = function(){
+    value++;
+    document.getElementById('myButton').innerHTML = value;
+   //sets the HTML text inside the button to display the number of times it has been clicked
+}
+
+and to this one 
+
+<button id="myButton" onclick = "handleClick()">click </button>
+
+function handleClick(){
+    value++;
+    document.getElementById('myButton').innerHTML = value;
+    //sets the HTML text inside the button to display the number of times it has been clicked
+}
+
+1.5.3 - Handling Keypress Events 
+
+document.addEventListener('keypress',handleKeyPress);
+
+function handleKeyPress(event){
+    var keyPressed= event.key; //event.key contains the key that was pressed
+    document.getElementById("text").innerHTML = "Key Pressed: " +  keyPressed;
+    //sets the HTML text to display the key pressed
+} 
