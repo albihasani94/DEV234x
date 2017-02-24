@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<head>
+    <title>Stopwatch Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+        <h1>Stopwatch Demo</h1>
+        <br/>
+        <h3><span id="seconds">0</span>.<span id="tens">00</span></h3>
+        <br/>
+        <button class="btn btn-primary" id="start">Start/Stop</button>
+        <button class="btn btn-warning" id="reset">Reset</button>
+        <button class="btn btn-danger" id="record">Record</button>
+        <br/>
+        <h3>Past Times</h3>
+        <h3 id="saved"></h3>
+            </div>
+        </div>
+    </div>
+    <script src="stopWatch.js"></script>
+</body>
+
+</html>
