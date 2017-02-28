@@ -1,0 +1,12 @@
+Build upon the product catalog tutorial by adding the functionality
+to search by product type or by price.
+
+- Search by product type
+- Search by product price 
+
+The users should be able to 
+
+- populate the similar product list when search by type with valid type 
+- populate the similar product list when products within $50 when search by price with valid price
+- populate the examined result by either search or clicking examine
+- see an error alert when searching for an invalid id, type, or price
