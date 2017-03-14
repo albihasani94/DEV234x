@@ -1,0 +1,12 @@
+An Application title
+A section labeled "Enter image url" that includes an input field and a button labeled "Analyse"
+A section labeled "Image" that displays the image of the provided url
+A section labeled "Attributes" that displays the age and gender of the image provided
+
+The image section is able to be populated with an image at least once
+The image section is able to be populated again with a different image
+
+When a valid photo is analyzed, the age of the image appears in the Attributes section
+When a valid photo is analyzed, the gender of the image face appeears in the Attributes section
+When an invalid photo is analuzed, the Attributes section displays "Nof Faces Detected"
+
